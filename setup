@@ -18,4 +18,10 @@ e_header "$APP_NAME - $ENVIRONMENT"
 e_header "cloning $APP_NAME ($APP_REPO)"
 e_arrow "into $APP_PATH"
 
-git clone $APP_REPO $APP_PATH
+git clone $APP_REPO $APP_PATH -q
+
+if [ -d $APP_PATH ]; then
+  e_success "done"
+else
+  e_error "failed"
+fi
