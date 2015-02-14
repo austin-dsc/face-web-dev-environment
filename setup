@@ -11,6 +11,7 @@ export APP_NAME=face-web
 export APP_OWNER=austin-dsc
 export APP_PATH=$WORKSPACE_PATH/$APP_NAME
 export APP_REPO=https://github.com/$APP_OWNER/$APP_NAME.git
+export DEV_BRANCH=accordion-store
 
 # Logging stuff.
 function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
@@ -21,11 +22,13 @@ function throw_error() { e_error $@; exit 1;}
 
 # Update the app repo
 function update_app() {
-  e_header "Updating $APP_NAME"
+  e_header "Updating $APP_NAME."
   if [ -d $APP_PATH ]; then
     e_arrow "in $APP_PATH"
     cd $APP_PATH
-    #git pull -q
+    git pull -q
+    e_arrow "switching to $DEV_BRANCH branch."
+    git checkout $DEV_BRANCH -q
     cd $SCRIPT_PATH
     e_success "done."
   else
@@ -42,6 +45,8 @@ function clone_app() {
     e_header "cloning $APP_NAME ($APP_REPO)"
     e_arrow "into $APP_PATH"
     git clone $APP_REPO $APP_PATH -q
+    e_arrow "switching to $DEV_BRANCH branch."
+    git checkout $DEV_BRANCH -q
     if [ -d $APP_PATH ]; then
       e_success "done."
     else
@@ -75,7 +80,7 @@ function install_app_packages() {
 }
 
 function run() {
-  e_header "Setup $APP_NAME - $ENVIRONMENT"
+  e_header "Setting up $APP_NAME ($ENVIRONMENT)"
   clone_app
   install_ember_cli
   install_app_packages
