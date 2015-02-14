@@ -8,6 +8,7 @@ function e_arrow()    { echo -e " \033[1;34m➜\033[0m  $@"; }
 # VARS
 export ENVIRONMENT=dev
 export WORKSPACE_PATH=~/workspace
+export SCRIPT_PATH=$(cd -P -- "$(dirname -- "$0")" && pwd -P)
 export APP_NAME=face-web
 export APP_OWNER=austin-dsc
 export APP_PATH=$WORKSPACE_PATH/$APP_NAME
