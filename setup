@@ -43,4 +43,9 @@ function clone_app() {
   fi
 }
 
-e_header "$APP_NAME - $ENVIRONMENT"
+function run() {
+  e_header "Setup $APP_NAME - $ENVIRONMENT"
+  clone_app
+}
+
+run
