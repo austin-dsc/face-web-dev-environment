@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+
 # Logging stuff.
 function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
 function e_success()  { echo -e " \033[1;32m✔\033[0m  $@"; }
@@ -15,11 +16,14 @@ export APP_PATH=$WORKSPACE_PATH/$APP_NAME
 export APP_REPO=https://github.com/$APP_OWNER/$APP_NAME.git
 
 # Update the app repo
-function upated_app() {
+function update_app() {
   e_header "Updating $APP_NAME"
   if [ -d $APP_PATH ]; then
+    e_arrow "in $APP_PATH"
     cd $APP_PATH
-    git checkout master && git pull origin master --rebase
+    git pull -q
+    cd $SCRIPT_PATH
+    e_success "done."
   else
     e_error "$APP_PATH does not exist."
   fi
@@ -27,13 +31,12 @@ function upated_app() {
 
 # Clone app repo into app path
 function clone_app() {
-	if [ -d $APP_PATH ]; then
-    e_header "$APP_PATH already exists."
-    update_app()
+  if [ -d $APP_PATH ]; then
+    e_header "App already exists."
+    update_app
   else
     e_header "cloning $APP_NAME ($APP_REPO)"
     e_arrow "into $APP_PATH"
-
     git clone $APP_REPO $APP_PATH -q
     if [ -d $APP_PATH ]; then
       e_success "done."
