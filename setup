@@ -52,13 +52,25 @@ function clone_app() {
 
 function install_ember_cli() {
   if [[ ! "$(type -P ember)" ]]; then
-    e_header "Installing the ember-cli npm package."
+    e_header "Installing the ember-cli npm global dependency."
     npm install -g ember-cli --silent
     e_success "done."
   else
     e_header "Updating the ember-cli npm package."
     npm update ember-cli --silent
     e_success "done."
+  fi
+}
+
+function install_app_packages() {
+  if [ -d $APP_PATH ]; then
+    e_header "Installing $APP_NAME local npm dependencies."
+    cd $APP_PATH
+    npm install --silent
+    cd $SCRIPT_PATH
+    e_success "done."
+  else
+    throw_error "$APP_PATH does not exist."
   fi
 }
 
