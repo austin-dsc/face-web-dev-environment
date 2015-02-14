@@ -1,1 +1,21 @@
-echo 'face-web dev environment - http://github.com/austin-dsc/face-web-dev-environment'
+# Logging stuff.
+function e_header()   { echo -e "\n\033[1m$@\033[0m"; }
+function e_success()  { echo -e " \033[1;32m✔\033[0m  $@"; }
+function e_error()    { echo -e " \033[1;31m✖\033[0m  $@"; }
+function e_arrow()    { echo -e " \033[1;34m➜\033[0m  $@"; }
+
+# VARS
+export ENVIRONMENT=dev
+export WORKSPACE_PATH=~/workspace
+export APP_NAME=face-web
+export APP_OWNER=austin-dsc
+export APP_PATH=$WORKSPACE_PATH/$APP_NAME
+export APP_REPO=https://github.com/$APP_OWNER/$APP_NAME.git
+
+# Clone app repo into app path
+e_header "$APP_NAME - $ENVIRONMENT"
+
+e_header "cloning $APP_NAME ($APP_REPO)"
+e_arrow "into $APP_PATH"
+
+git clone $APP_REPO $APP_PATH
